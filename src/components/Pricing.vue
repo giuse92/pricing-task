@@ -1,7 +1,8 @@
 <template>
-  <section v-if="isLoaded">
+  <section class="pricing" v-if="isLoaded">
+    <h2>Scegli il piano che fa per te:</h2>
     <div class="block">
-      <span class="demonstration">Customers</span>
+      <span class="demonstration">Totale clienti:</span>
       <el-slider
         v-model="customersValue"
         :min="0"
@@ -13,7 +14,7 @@
       </el-slider>
     </div>
     <div style="margin-top: 50px" class="block">
-      <span class="demonstration">Orders</span>
+      <span class="demonstration">Ordini mese:</span>
       <el-slider
         v-model="ordersValue"
         :format-tooltip="changeOrdersTooltip"
@@ -24,39 +25,44 @@
       >
       </el-slider>
     </div>
-    <div class="block">
+    <div class="block input-number">
+      <span>Il prezzo include</span>
       <el-input-number
+        style="margin-bottom= 15px"
         :min="5"
         :max="Infinity"
         v-model="additionalFieldsValue"
         :controls="true"
       >
       </el-input-number>
+      <span>campi addizionali Clienti e Ordini</span>
     </div>
-    <el-button-group>
-      <el-button @click="changeFrequency" name="month" type="success" plain
-        >Month</el-button
-      >
-      <el-button @click="changeFrequency" name="quarter" type="success" plain
-        >Quarter</el-button
-      >
-      <el-button
-        @click="changeFrequency"
-        name="year"
-        type="success"
-        autofocus
-        plain
-        >Year</el-button
-      >
-    </el-button-group>
-    <FinalPrice
-      :customerPrice="customersStepsPrice"
-      :orderPrice="ordersStepsPrice"
-      :additionalFieldFactor="
-        additionalFieldFactor *
-        (additionalFieldsValue - defaultAdditionalFields)
-      "
-    />
+    <div class="button-group">
+      <el-button-group>
+        <el-button @click="changeFrequency" name="month" type="success" plain
+          >Mensile</el-button
+        >
+        <el-button @click="changeFrequency" name="quarter" type="success" plain
+          >Trimestrale</el-button
+        >
+        <el-button
+          @click="changeFrequency"
+          name="year"
+          type="success"
+          :autofocus="true"
+          plain
+          >Annuale</el-button
+        >
+      </el-button-group>
+      <FinalPrice
+        :customerPrice="customersStepsPrice"
+        :orderPrice="ordersStepsPrice"
+        :additionalFieldFactor="
+          additionalFieldFactor *
+          (additionalFieldsValue - defaultAdditionalFields)
+        "
+      />
+    </div>
   </section>
 </template>
 
@@ -178,3 +184,31 @@ export default {
   },
 };
 </script>
+
+<style>
+.pricing {
+  color: #293749;
+  font-family: "Lato", sans-serif;
+}
+.pricing h2 {
+  font-size: 48px;
+  line-height: 66px;
+  text-align: center;
+}
+.block.input-number {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.block.input-number span {
+  margin: 0 10px;
+}
+
+.button-group {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+</style>
